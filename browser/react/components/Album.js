@@ -15,6 +15,7 @@ export default class Album extends React.Component {
 
 
   render() {
+    console.log('in Album props ', this.props)
     return (
       <div className="album">
         <div>
