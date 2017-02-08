@@ -4,13 +4,6 @@ import axios from 'axios'
 import { convertAlbum } from '../utils';
 
 export default class Album extends React.Component {
-  // constructor(props){
-  //   super(props)
-  //   this.album = props.album;
-  //   this.currentSong = props.currentSong;
-  //   this.isPlaying = props.isPlaying;
-  //   this.toggleOne = props.toggleOne;
-  // }
 
   componentDidMount(){
     const albumId = this.props.params.albumId;

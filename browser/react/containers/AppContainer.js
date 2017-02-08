@@ -26,9 +26,13 @@ export default class AppContainer extends Component {
   }
 
   componentDidMount () {
-    axios.get('/api/albums/')
-      .then(res => res.data)
-      .then(album => this.onLoad(convertAlbums(album)));
+    let gettingAlbums = axios.get('/api/albums/');
+    let gettingArtists = axios.get('/api/artists/');
+
+
+    Promise.all([gettingAlbums, gettingArtists])  
+           .then(res => [res[0].data, res[1].data])
+           .then(data => this.onLoad(convertAlbums(data[0]), data[1])); 
 
     AUDIO.addEventListener('ended', () =>
       this.next());
@@ -36,9 +40,10 @@ export default class AppContainer extends Component {
       this.setProgress(AUDIO.currentTime / AUDIO.duration));
   }
 
-  onLoad (albums) {
+  onLoad (albums, artists) {
     this.setState({
-      albums: albums
+      albums: albums,
+      artists: artists
     });
   }
 
@@ -98,9 +103,18 @@ export default class AppContainer extends Component {
       }));
   }
 
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
+  selectArtist (artistId) {
+    // needs to be completed
+    // axios.get(`/api/artists/${artistId}/albums`)
+    //   .then(res => res.data)
+    //   .then(album => this.setState({
+    //     selectedArtist: 
+    //   }));
   }
+
+  // deselectAlbum () {
+  //   this.setState({ selectedAlbum: {}});
+  // }
 
   render () {
     return (
@@ -118,7 +132,9 @@ export default class AppContainer extends Component {
           toggleOne: this.toggleOne,
           //albums component
           albums: this.state.albums,
-          selectAlbum: this.selectAlbum
+          selectAlbum: this.selectAlbum,
+          //Artists component
+          artists: this.state.artists
           }) :
           null
         }
