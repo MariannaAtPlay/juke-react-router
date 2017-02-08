@@ -109,7 +109,20 @@ export default class AppContainer extends Component {
           <Sidebar deselectAlbum={this.deselectAlbum} />
         </div>
         <div className="col-xs-10">
-        {
+        { this.props.children ?
+          React.cloneElement(this.props.children, {
+          //album component
+          album: this.state.selectedAlbum,
+          currentSong: this.state.currentSong,
+          isPlaying:this.state.isPlaying,
+          toggleOne: this.toggleOne,
+          //albums component
+          albums: this.state.albums,
+          selectAlbum: this.selectAlbum
+          }) :
+          null
+        }
+        {/*
           this.state.selectedAlbum.id ?
           <Album
             album={this.state.selectedAlbum}
@@ -121,7 +134,7 @@ export default class AppContainer extends Component {
             albums={this.state.albums}
             selectAlbum={this.selectAlbum}
           />
-        }
+        */}
         </div>
         <Player
           currentSong={this.state.currentSong}

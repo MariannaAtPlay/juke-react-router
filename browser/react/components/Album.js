@@ -1,26 +1,41 @@
 import React from 'react';
 import Songs from '../components/Songs';
+import axios from 'axios'
+import { convertAlbum } from '../utils';
 
-const Album = (props) => {
+export default class Album extends React.Component {
+  // constructor(props){
+  //   super(props)
+  //   this.album = props.album;
+  //   this.currentSong = props.currentSong;
+  //   this.isPlaying = props.isPlaying;
+  //   this.toggleOne = props.toggleOne;
+  // }
 
-  const album = props.album;
-  const currentSong = props.currentSong;
-  const isPlaying = props.isPlaying;
-  const toggleOne = props.toggleOne;
+  componentDidMount(){
+    const albumId = this.props.params.albumId;
+    const selectAlbum = this.props.selectAlbum;
 
-  return (
-    <div className="album">
-      <div>
-        <h3>{ album.name }</h3>
-        <img src={ album.imageUrl } className="img-thumbnail" />
+    selectAlbum(albumId)
+
+  }
+
+
+  render() {
+    return (
+      <div className="album">
+        <div>
+          <h3>{ this.props.album.name }</h3>
+          <img src={ this.props.album.imageUrl } className="img-thumbnail" />
+        </div>
+        <Songs
+          songs={this.props.album.songs}
+          currentSong={this.props.currentSong}
+          isPlaying={this.props.isPlaying}
+          toggleOne={this.props.toggleOne} />
       </div>
-      <Songs
-        songs={album.songs}
-        currentSong={currentSong}
-        isPlaying={isPlaying}
-        toggleOne={toggleOne} />
-    </div>
-  );
+    );
+  }
 }
 
-export default Album;
+
